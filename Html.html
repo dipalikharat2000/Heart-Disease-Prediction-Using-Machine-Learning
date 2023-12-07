@@ -1,0 +1,241 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Heart Disease Prediction</title>
+    <style>
+
+body {
+    background-color:cadetblue ;
+    margin: 0;
+    background-image:url(https://sahyadrihospital.com/wp-content/uploads/2021/09/How-to-detect-heart-problems.jpg ) ;
+    background-repeat: no-repeat;
+    background-position-x: center;
+    background-attachment: fixed;
+  }
+  
+  .container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  h1 {
+    text-align: center;
+    color: red;
+    background-color: lightblue;
+    font-size: 40px;
+  }
+  
+  form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  
+  .form-group {
+    width: 45%;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  input[type="number"],
+  select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+  }
+  
+  select {
+    height: 40px;
+  }
+  
+  button[type="submit"] {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 10px 20px;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #3e8e41;
+  }
+  
+  #result {
+    margin-top: 20px;
+    font-size: 1.2rem;
+  }
+  
+  .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+  
+  .form-group label {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .form-group select,
+  .form-group input {
+    font-size: 18px;
+    padding: 8px;
+  }
+  
+  #predict-button {
+    margin-top: 20px;
+    padding: 12px 24px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+  }
+  
+  #result {
+    margin-top: 20px;
+    font-size: 1.5rem;
+  }
+  </style>
+    
+  </head>
+  <body>
+     <div class="container">
+      <h1>Heart Disease Prediction</h1>
+      <form method="post" action="{{ url_for('predict') }}">
+       
+        <div class="form-group">
+          <label for="age">Age:</label>
+          <input type="number" id="age" required />
+        </div>
+        <div class="form-group">
+          <label for="sex">Sex:</label>
+          <select id="sex" required>
+            <option value="" disabled selected>Select gender</option>
+            <option value="0">0(Female)</option>
+            <option value="1">1(Male)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="cp">Chest Pain Type:</label>
+          <select id="cp" required>
+            <option value="" disabled selected>Select type</option>
+            <option value="1">1(Typical angina)</option>
+            <option value="2">2(Atypical angina)</option>
+            <option value="3">3(Non-anginal pain)</option>
+            <option value="4">4(Asymptomatic)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="trestbps">Resting Blood Pressure (mm Hg):</label>
+          <input type="number" id="trestbps" required />
+        </div>
+        <div class="form-group">
+          <label for="chol">Serum Cholesterol (mg/dl):</label>
+          <input type="number" id="chol" required />
+        </div>
+        <div class="form-group">
+          <label for="fbs">Fasting Blood Sugar > 120 mg/dl:</label>
+          <select id="fbs" required>
+            <option value="" disabled selected>Select</option>
+            <option value="0">0(False)</option>
+            <option value="1">1(True)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="restecg">Resting Electrocardiographic Results:</label>
+          <select id="restecg" required>
+            <option value="" disabled selected>Select result</option>
+            <option value="0">0(Normal)</option>
+            <option value="1">1(ST-T wave abnormality)</option>
+            <option value="2">2(Left ventricular hypertrophy)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="thalach">Maximum Heart Rate Achieved:</label>
+          <input type="number" id="thalach" required />
+        </div>
+        <div class="form-group">
+          <label for="exang">Exercise Induced Angina:</label>
+          <select id="exang" required>
+            <option value="" disabled selected>Select</option>
+            <option value="0">0(No)</option>
+            <option value="1">1(Yes)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="old"> Peak ST Segment:</label>
+<select id="oldpeak" required>
+<option value="" disabled selected>Select</option>
+<option value="0">0</option>
+<option value="0.5">0.5</option>
+<option value="1">1</option>
+<option value="1.5">1.5</option>
+<option value="2">2</option>
+<option value="2.5">2.5</option>
+<option value="3">3</option>
+</select>
+</div>
+<div class="form-group">
+<label for="slope">Slope of Peak Exercise ST Segment:</label>
+<select id="slope" required>
+<option value="" disabled selected>Select slope</option>
+<option value="1">0(Upsloping)</option>
+<option value="2">1(Flat)</option>
+<option value="3">2(Downsloping)</option>
+</select>
+</div>
+<div class="form-group">
+<label for="ca">Number of Major Vessels:</label>
+<select id="ca" required>
+<option value="" disabled selected>Select number</option>
+<option value="0">0</option>
+<option value="1">1</option>
+<option value="2">2</option>
+<option value="3">3</option>
+</select>
+</div>
+<div class="form-group">
+<label for="thal">Thalassemia:</label>
+<select id="thal" required>
+<option value="" disabled selected>Select</option>
+<option value="1">1(Normal)</option>
+<option value="2">2(Fixed Defect)</option>
+<option value="3">3(Reversible Defect)</option>
+</select>
+</div>
+<button type="submit" id="predict-button">Predict</button>
+</form>
+<div id="result"></div>
+
+     {{result}}
+
+</div>
+<script src="script.js"></script>
+
+  </body>
+</html>
